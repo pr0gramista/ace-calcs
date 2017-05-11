@@ -15,9 +15,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><router-link to="/">Gear</router-link></li>
-            <li><a href="#"><router-link to="/weapons">Weapons</router-link></a></li>
-            <li><a href="#"><router-link to="/armors">Armors</router-link></a></li>
-            <li><a href="#"><router-link to="/contact">Contact</router-link></a></li>
+            <li><router-link to="/weapons">Weapons</router-link></li>
+            <li><router-link to="/armors">Armors</router-link></li>
+            <li><router-link to="/contact">Contact</router-link></li>
           </ul>
         </div>
       </div>
