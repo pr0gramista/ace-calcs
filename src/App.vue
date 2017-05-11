@@ -14,8 +14,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Link</a></li>
+            <li><router-link to="/">Gear</router-link></li>
+            <li><a href="#"><router-link to="/weapons">Weapons</router-link></a></li>
+            <li><a href="#"><router-link to="/armors">Armors</router-link></a></li>
+            <li><a href="#"><router-link to="/contact">Contact</router-link></a></li>
           </ul>
         </div>
       </div>
