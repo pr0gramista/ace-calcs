@@ -1,23 +1,28 @@
 <template>
-  <div class="gearcalc">
-    Level: <input v-model="level"></input>
-    Points: {{ points }}
-    Gear type:
-    <select>
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
-    </select>
+  <div class="gearcalc container">
+    <label for="gear">Gear</label>
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ gear }} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a @click="gear = 'B-Gear'" href="#">B-Gear</a></li>
+        <li><a @click="gear = 'I-Gear'" href="#">I-Gear</a></li>
+        <li><a @click="gear = 'A-Gear'" href="#">A-Gear</a></li>
+        <li><a @click="gear = 'M-Gear'" href="#">M-Gear</a></li>
+      </ul>
+    </div>
+    <label for="level">Level</label>
+    <input class="input-group" v-model="level"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello',
+  name: 'GearCalc',
   data () {
     return {
-      gear: 'M-Gear',
+      gear: 'B-Gear',
       level: 1
     }
   },
@@ -25,6 +30,8 @@ export default {
     points: function () {
       return this.level * 3
     }
+  },
+  methods: {
   }
 }
 </script>
