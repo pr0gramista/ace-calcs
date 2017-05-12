@@ -29,10 +29,10 @@
           <button class="stat-button red" v-bind:class="{ disabled: stats['defense'] <= 1 }" @click="decreaseStat('defense')"><i class="material-icons">keyboard_arrow_down</i></button>
           <small class="less">points to max: {{ points_to_max.defense }}</small>
         </div>
-        <div>Evansion: {{ values.evansion }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['evansion'] + 1) * this.factors['evansion'] > 300 }" @click="increaseStat('evansion')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['evansion'] <= 1 }" @click="decreaseStat('evansion')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.evansion }}</small>
+        <div>Evasion: {{ values.evasion }}
+          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['evasion'] + 1) * this.factors['evasion'] > 300 }" @click="increaseStat('evasion')"><i class="material-icons">keyboard_arrow_up</i></button>
+          <button class="stat-button red" v-bind:class="{ disabled: stats['evasion'] <= 1 }" @click="decreaseStat('evasion')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.evasion }}</small>
         </div>
       </div>
       <div class="col-sm-6 stats">
@@ -57,7 +57,7 @@
       </div>
       <div class="col-sm-4 bonus">
         <div>Defense bonus: {{ defense_bonus }}</div>
-        <div>Evansion bonus: {{ evansion_bonus }}</div>
+        <div>Evasion bonus: {{ evasion_bonus }}</div>
         <div>Shield: {{ shield_bonus }}</div>
       </div>
       <div class="col-sm-4 bonus">
@@ -79,7 +79,7 @@ let statsFactors = {
   'B-Gear': {
     attack: 3,
     defense: 3,
-    evansion: 3,
+    evasion: 3,
     fuel: 3,
     spirit: 3,
     shield: 3
@@ -87,7 +87,7 @@ let statsFactors = {
   'I-Gear': {
     attack: 4,
     defense: 2,
-    evansion: 4,
+    evasion: 4,
     fuel: 3,
     spirit: 3,
     shield: 2
@@ -95,7 +95,7 @@ let statsFactors = {
   'A-Gear': {
     attack: 4,
     defense: 3,
-    evansion: 1,
+    evasion: 1,
     fuel: 3,
     spirit: 3,
     shield: 4
@@ -103,7 +103,7 @@ let statsFactors = {
   'M-Gear': {
     attack: 2,
     defense: 4,
-    evansion: 2,
+    evasion: 2,
     fuel: 3,
     spirit: 4,
     shield: 3
@@ -412,7 +412,7 @@ export default {
       stats: {
         attack: 1,
         defense: 1,
-        evansion: 1,
+        evasion: 1,
         spirit: 1,
         fuel: 1,
         shield: 1
@@ -436,7 +436,7 @@ export default {
       var usedPoints = 0
       usedPoints += this.stats.attack
       usedPoints += this.stats.defense
-      usedPoints += this.stats.evansion
+      usedPoints += this.stats.evasion
       usedPoints += this.stats.fuel
       usedPoints += this.stats.spirit
       usedPoints += this.stats.shield
@@ -446,7 +446,7 @@ export default {
       return {
         attack: this.factors.attack * this.stats.attack,
         defense: this.factors.defense * this.stats.defense,
-        evansion: this.factors.evansion * this.stats.evansion,
+        evasion: this.factors.evasion * this.stats.evasion,
         fuel: this.factors.fuel * this.stats.fuel,
         spirit: this.factors.spirit * this.stats.spirit,
         shield: this.factors.shield * this.stats.shield
@@ -455,8 +455,8 @@ export default {
     damage_bonus: function () {
       return (damageBonusPerStat[this.values.attack] * 100).toFixed(2)
     },
-    evansion_bonus: function () {
-      return (evasionBonusPerStat[this.values.evansion] * 100).toFixed(2)
+    evasion_bonus: function () {
+      return (evasionBonusPerStat[this.values.evasion] * 100).toFixed(2)
     },
     defense_bonus: function () {
       return (defenseBonusPerStat[this.values.defense] * 100).toFixed(2)
@@ -483,7 +483,7 @@ export default {
       return {
         attack: Math.floor((300 - this.values.attack) / this.factors.attack),
         defense: Math.floor((300 - this.values.defense) / this.factors.defense),
-        evansion: Math.floor((300 - this.values.evansion) / this.factors.evansion),
+        evasion: Math.floor((300 - this.values.evasion) / this.factors.evasion),
         fuel: Math.floor((300 - this.values.fuel) / this.factors.fuel),
         spirit: Math.floor((300 - this.values.spirit) / this.factors.spirit),
         shield: Math.floor((300 - this.values.shield) / this.factors.shield)
