@@ -17,32 +17,39 @@
         <label for="level">Level</label>
         <input id="level" class="form-control small-input" v-model="level"/>
       </div>
-      <div class="col-sm-6">
-        <div>Attack: {{ attack }}
+      <div class="col-sm-6 stats">
+        <div>
+          Attack: {{ values.attack }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('attack')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['attack'] <= 1 }" @click="decreaseStat('attack')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.attack }}</small>
         </div>
-        <div>Defense: {{ defense }}
+        <div>Defense: {{ values.defense }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('defense')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['defense'] <= 1 }" @click="decreaseStat('defense')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.defense }}</small>
         </div>
-        <div>Evansion: {{ evansion }}
+        <div>Evansion: {{ values.evansion }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('evansion')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['evansion'] <= 1 }" @click="decreaseStat('evansion')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.evansion }}</small>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div>Fuel: {{ fuel }}
+      <div class="col-sm-6 stats">
+        <div>Fuel: {{ values.fuel }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('fuel')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['fuel'] <= 1 }" @click="decreaseStat('fuel')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.fuel }}</small>
         </div>
-        <div>Spirit: {{ spirit }}
+        <div>Spirit: {{ values.spirit }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('spirit')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['spirit'] <= 1 }" @click="decreaseStat('spirit')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.spirit }}</small>
         </div>
-        <div>Shield: {{ shield }}
+        <div>Shield: {{ values.shield }}
           <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 }" @click="increaseStat('shield')"><i class="material-icons">keyboard_arrow_up</i></button>
           <button class="stat-button red" v-bind:class="{ disabled: stats['shield'] <= 1 }" @click="decreaseStat('shield')"><i class="material-icons">keyboard_arrow_down</i></button>
+          <small class="less">points to max: {{ points_to_max.shield }}</small>
         </div>
       </div>
       <div class="col-sm-12">
@@ -160,29 +167,31 @@ export default {
       usedPoints += this.stats.shield
       return this.points - usedPoints
     },
-    attack: function () {
-      return this.factors.attack * this.stats.attack
-    },
-    defense: function () {
-      return this.factors.defense * this.stats.defense
-    },
-    evansion: function () {
-      return this.factors.evansion * this.stats.evansion
-    },
-    fuel: function () {
-      return this.factors.fuel * this.stats.fuel
-    },
-    spirit: function () {
-      return this.factors.spirit * this.stats.spirit
-    },
-    shield: function () {
-      return this.factors.shield * this.stats.shield
+    values: function () {
+      return {
+        attack: this.factors.attack * this.stats.attack,
+        defense: this.factors.defense * this.stats.defense,
+        evansion: this.factors.evansion * this.stats.evansion,
+        fuel: this.factors.fuel * this.stats.fuel,
+        spirit: this.factors.spirit * this.stats.spirit,
+        shield: this.factors.shield * this.stats.shield
+      }
     },
     evansion_bonus: function () {
-      return specialStat[this.evansion]
+      return specialStat[this.values.evansion]
     },
     defense_bonus: function () {
-      return specialStat[this.evansion]
+      return specialStat[this.values.defense]
+    },
+    points_to_max: function () {
+      return {
+        attack: Math.floor((300 - this.values.attack) / this.factors.attack),
+        defense: Math.floor((300 - this.values.defense) / this.factors.defense),
+        evansion: Math.floor((300 - this.values.evansion) / this.factors.evansion),
+        fuel: Math.floor((300 - this.values.fuel) / this.factors.fuel),
+        spirit: Math.floor((300 - this.values.spirit) / this.factors.spirit),
+        shield: Math.floor((300 - this.values.shield) / this.factors.shield)
+      }
     }
   },
   methods: {
@@ -211,9 +220,21 @@ label {
   margin-left: 10px;
 }
 
+small {
+  font-size: 14px;
+}
+
+.less {
+  color: #DDD;
+}
+
 .small-input {
   width: 75px;
   display: inline-block;
+}
+
+.stats {
+  font-size: 20px;
 }
 
 .stat-button {
