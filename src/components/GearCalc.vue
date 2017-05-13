@@ -1,74 +1,81 @@
 <template>
   <div class="gearcalc container">
     <div class="row">
-      <div class="col-sm-12">
-        <label class="left-label" for="gear">Gear</label>
-        <div id="gear" class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ gear }} <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a @click="setGear('B-Gear')" href="#">B-Gear</a></li>
-            <li><a @click="setGear('I-Gear')" href="#">I-Gear</a></li>
-            <li><a @click="setGear('A-Gear')" href="#">A-Gear</a></li>
-            <li><a @click="setGear('M-Gear')" href="#">M-Gear</a></li>
-          </ul>
+      <div class="col-sm-9">
+        <div class="col-sm-12">
+          <label class="left-label" for="gear">Gear</label>
+          <div id="gear" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ gear }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a @click="setGear('B-Gear')" href="#">B-Gear</a></li>
+              <li><a @click="setGear('I-Gear')" href="#">I-Gear</a></li>
+              <li><a @click="setGear('A-Gear')" href="#">A-Gear</a></li>
+              <li><a @click="setGear('M-Gear')" href="#">M-Gear</a></li>
+            </ul>
+          </div>
+          <label for="level">Level</label>
+          <input id="level" class="form-control small-input" v-model="level"/>
         </div>
-        <label for="level">Level</label>
-        <input id="level" class="form-control small-input" v-model="level"/>
+        <div class="col-sm-6 stats">
+          <div>
+            Attack: {{ values.attack }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['attack'] + 1) * this.factors['attack'] > 300 }" @click="increaseStat('attack')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['attack'] <= 1 }" @click="decreaseStat('attack')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.attack }}</small>
+          </div>
+          <div>Defense: {{ values.defense }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['defense'] + 1) * this.factors['defense'] > 300 }" @click="increaseStat('defense')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['defense'] <= 1 }" @click="decreaseStat('defense')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.defense }}</small>
+          </div>
+          <div>Evasion: {{ values.evasion }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['evasion'] + 1) * this.factors['evasion'] > 300 }" @click="increaseStat('evasion')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['evasion'] <= 1 }" @click="decreaseStat('evasion')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.evasion }}</small>
+          </div>
+        </div>
+        <div class="col-sm-6 stats">
+          <div>Fuel: {{ values.fuel }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['fuel'] + 1) * this.factors['fuel'] > 300 }" @click="increaseStat('fuel')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['fuel'] <= 1 }" @click="decreaseStat('fuel')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.fuel }}</small>
+          </div>
+          <div>Spirit: {{ values.spirit }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['spirit'] + 1) * this.factors['spirit'] > 300 }" @click="increaseStat('spirit')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['spirit'] <= 1 }" @click="decreaseStat('spirit')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.spirit }}</small>
+          </div>
+          <div>Shield: {{ values.shield }}
+            <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['shield'] + 1) * this.factors['shield'] > 300 }" @click="increaseStat('shield')"><i class="material-icons">keyboard_arrow_up</i></button>
+            <button class="stat-button red" v-bind:class="{ disabled: stats['shield'] <= 1 }" @click="decreaseStat('shield')"><i class="material-icons">keyboard_arrow_down</i></button>
+            <small class="less">points to max: {{ points_to_max.shield }}</small>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          Stats: {{ availablePoints }}
+        </div>
+        <div class="col-sm-4 bonus">
+          <div>Defense bonus: {{ defense_bonus }}</div>
+          <div>Evasion bonus: {{ evasion_bonus }}</div>
+          <div>Shield: {{ shield_bonus }}</div>
+        </div>
+        <div class="col-sm-4 bonus">
+          <div>Damage bonus: {{ damage_bonus }}</div>
+          <div>Pierce bonus: {{ pierce_bonus }}</div>
+          <div>Accuracy bonus: {{ accuracy_bonus }}</div>
+        </div>
+        <div class="col-sm-4 bonus">
+          <div>Spirit: {{ spirit_bonus }}</div>
+          <div>Fuel: {{ fuel_bonus }}</div>
+          <div>Capacity: {{ capacity_bonus }}</div>
+        </div>
       </div>
-      <div class="col-sm-6 stats">
-        <div>
-          Attack: {{ values.attack }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['attack'] + 1) * this.factors['attack'] > 300 }" @click="increaseStat('attack')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['attack'] <= 1 }" @click="decreaseStat('attack')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.attack }}</small>
+      <div class="col-sm-3 cpus">
+        <div v-for="cpu in cpus">
+          {{ cpu[0] }}
         </div>
-        <div>Defense: {{ values.defense }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['defense'] + 1) * this.factors['defense'] > 300 }" @click="increaseStat('defense')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['defense'] <= 1 }" @click="decreaseStat('defense')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.defense }}</small>
-        </div>
-        <div>Evasion: {{ values.evasion }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['evasion'] + 1) * this.factors['evasion'] > 300 }" @click="increaseStat('evasion')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['evasion'] <= 1 }" @click="decreaseStat('evasion')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.evasion }}</small>
-        </div>
-      </div>
-      <div class="col-sm-6 stats">
-        <div>Fuel: {{ values.fuel }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['fuel'] + 1) * this.factors['fuel'] > 300 }" @click="increaseStat('fuel')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['fuel'] <= 1 }" @click="decreaseStat('fuel')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.fuel }}</small>
-        </div>
-        <div>Spirit: {{ values.spirit }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['spirit'] + 1) * this.factors['spirit'] > 300 }" @click="increaseStat('spirit')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['spirit'] <= 1 }" @click="decreaseStat('spirit')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.spirit }}</small>
-        </div>
-        <div>Shield: {{ values.shield }}
-          <button class="stat-button green" v-bind:class="{ disabled: availablePoints <= 0 || (this.stats['shield'] + 1) * this.factors['shield'] > 300 }" @click="increaseStat('shield')"><i class="material-icons">keyboard_arrow_up</i></button>
-          <button class="stat-button red" v-bind:class="{ disabled: stats['shield'] <= 1 }" @click="decreaseStat('shield')"><i class="material-icons">keyboard_arrow_down</i></button>
-          <small class="less">points to max: {{ points_to_max.shield }}</small>
-        </div>
-      </div>
-      <div class="col-sm-12">
-        Stats: {{ availablePoints }}
-      </div>
-      <div class="col-sm-4 bonus">
-        <div>Defense bonus: {{ defense_bonus }}</div>
-        <div>Evasion bonus: {{ evasion_bonus }}</div>
-        <div>Shield: {{ shield_bonus }}</div>
-      </div>
-      <div class="col-sm-4 bonus">
-        <div>Damage bonus: {{ damage_bonus }}</div>
-        <div>Pierce bonus: {{ pierce_bonus }}</div>
-        <div>Accuracy bonus: {{ accuracy_bonus }}</div>
-      </div>
-      <div class="col-sm-4 bonus">
-        <div>Spirit: {{ spirit_bonus }}</div>
-        <div>Fuel: {{ fuel_bonus }}</div>
-        <div>Capacity: {{ capacity_bonus }}</div>
       </div>
     </div>
   </div>
@@ -109,6 +116,173 @@ let statsFactors = {
     shield: 3
   }
 }
+
+var cpuList = [
+  ['Power Brain No.7 UND', 1, 30, 15, 0, 0, 0, 0],
+  ['Surquince 8 Final Ver.UNQ', 1, 15, 0, 0, 0, 30, 0],
+  ['Tenpole Line 7 UTM', 1, 20, 0, 0, 0, 10, 15],
+  ['Thunderforce Final U', 1, 20, 0, 10, 15, 0, 0],
+  ['Tune Square PS FG-6A', 1, 10, 0, 0, 20, 15, 0],
+  ['Wingo Techno JMV', 1, 0, 20, 5, 0, 0, 20],
+  ['Surquince 7 TN-11A', 6, 4, 0, 0, 0, 3, 0],
+  ['Tenpole Line 6 Turbo', 6, 6, 0, 0, 1, 0, 0],
+  ['Thunderforce 4 VA', 6, 0, 1, 0, 2, 2, 2],
+  ['Adagio YE-05', 12, 0, 9, 7, 0, 0, 0],
+  ['Andantino Format 68-0F', 12, 8, 0, 8, 0, 0, 0],
+  ['Fortissimo No.81 FEE', 12, 9, 7, 0, 0, 0, 0],
+  ['Moderato Version. D3', 12, 0, 0, 0, 0, 6, 10],
+  ['SC-Dolce-00', 12, 0, 0, 0, 8, 0, 8],
+  ['Vivace X PA', 12, 6, 0, 0, 0, 10, 0],
+  ['A-L System', 12, 17, 23, 15, 0, 0, 13],
+  ['B-L System', 12, 18, 0, 20, 15, 15, 0],
+  ['I-L System', 12, 18, 20, 15, 0, 0, 15],
+  ['M-L System', 12, 13, 20, 10, 25, 0, 0],
+  ['Thunderfoce 4 FG34', 15, 5, 0, 3, 0, 0, 2],
+  ['Power Brain No.1L', 20, 6, 0, 0, 0, 0, 2],
+  ['Power Brain No.1S', 20, 4, 3, 0, 3, 0, 0],
+  ['Surquince 7 ODR', 20, 5, 0, 0, 0, 5, 0],
+  ['Surquince 7 SDR', 20, 8, 0, 2, 0, 0, 0],
+  ['Tenpole Line 6 DDE', 20, 5, 0, 0, 2, 0, 2],
+  ['Tenpole Line 6 HRE', 20, 6, 0, 0, 0, 4, 0],
+  ['Thunderforce 4 FA34', 20, 0, 0, 0, 0, 0, 5],
+  ['Thunderforce 4 FG34', 20, 5, 0, 3, 0, 0, 2],
+  ['Wingo ATC-A1', 20, 0, 4, 0, 0, 0, 6],
+  ['Wingo ZS-03', 20, 0, 0, 0, 2, 2, 6],
+  ['Adagio YE-06', 22, 6, 10, 0, 6, 0, 0],
+  ['Andantino Format 76-SS', 22, 0, 0, 10, 6, 0, 6],
+  ['Fortissimo No.81', 22, 10, 6, 6, 0, 0, 0],
+  ['Moderato Version. D5', 22, 6, 0, 0, 4, 6, 12],
+  ['SC-Dolce-2L', 22, 0, 8, 0, 10, 4, 8],
+  ['Vivace X PE', 22, 0, 0, 5, 0, 12, 5],
+  ['Artemis Zone Type L', 30, 3, 4, 0, 0, 4, 4],
+  ['Generation System R11', 30, 5, 0, 5, 0, 5, 0],
+  ['Power Brain No.3DRO', 30, 9, 3, 0, 0, 0, 3],
+  ['Power Brain No.3WL', 30, 6, 6, 0, 3, 0, 0],
+  ['Prelude 4001VF', 30, 0, 0, 7, 8, 0, 0],
+  ['Surquince 8 GUD', 30, 10, 0, 0, 0, 5, 0],
+  ['Surquince 8 KKL', 30, 6, 0, 0, 0, 9, 0],
+  ['Tenpole Line 7 DFE', 30, 6, 0, 3, 0, 6, 0],
+  ['Tenpole Line 7 SPS', 30, 7, 0, 0, 5, 0, 3],
+  ['Thunderforce 5 Kn.1', 30, 9, 0, 0, 0, 0, 6],
+  ['Thunderforce 5 Kn.3', 30, 5, 0, 5, 0, 0, 5],
+  ['Tune Square PS L-11', 30, 3, 0, 0, 3, 9, 0],
+  ['Wingo ZS-07 AT', 30, 3, 6, 0, 0, 0, 6],
+  ['Wingo ZS-06 DFS', 30, 0, 0, 0, 4, 3, 8],
+  ['Artemis Zone Type EF', 40, 5, 6, 0, 0, 5, 5],
+  ['Generation System Ver.66', 40, 7, 0, 7, 0, 7, 0],
+  ['Power Brain No.5 FA', 40, 8, 8, 0, 5, 0, 0],
+  ['Power Brain No.5 FDG', 40, 14, 3, 0, 0, 0, 4],
+  ['Predude 5001 FF', 40, 0, 0, 11, 10, 0, 0],
+  ['Surquince 8 Final ver.AG', 40, 13, 0, 0, 0, 8, 0],
+  ['Surquince 8 Final Ver.DT', 40, 8, 0, 0, 0, 13, 0],
+  ['Tenpole Line 7 FDA', 40, 8, 0, 5, 0, 8, 0],
+  ['Tenpole Line 7 FPA', 40, 9, 0, 0, 7, 0, 5],
+  ['Thunderforce Final A', 40, 13, 0, 0, 0, 0, 8],
+  ['Thunderforce Final D', 40, 7, 0, 0, 0, 0, 7],
+  ['Tune Square PS ED-1A', 40, 5, 0, 0, 5, 11, 0],
+  ['Wingo Waltz Format 1A', 40, 5, 8, 0, 0, 0, 8],
+  ['Wingo Waltz Format 1D', 40, 0, 0, 0, 6, 5, 10],
+  ['Andantino Format 76-SF', 42, 10, 0, 20, 10, 8, 0],
+  ['Fortissimo No.73 R99', 42, 20, 0, 12, 6, 10, 0],
+  ['Moderato Version. D8', 42, 0, 10, 12, 8, 0, 18],
+  ['SC-Dolce-4S', 42, 6, 0, 12, 20, 0, 10],
+  ['Vivace X BT', 42, 12, 0, 15, 3, 18, 0],
+  ['Artemis Zone Type FV', 50, 8, 7, 0, 0, 7, 8],
+  ['Generation System Ver.77T', 50, 10, 0, 10, 0, 10, 0],
+  ['Power Brain No.7 ADS', 50, 20, 5, 0, 0, 0, 5],
+  ['Power Brain No.7 ODS', 50, 12, 12, 0, 6, 0, 0],
+  ['Prelude 7001 ARC', 50, 0, 0, 15, 15, 0, 0],
+  ['Surquince 8 Final Ver.II-A', 50, 20, 0, 0, 0, 10, 0],
+  ['Surquince 8 Final Ver.II-S', 50, 10, 0, 0, 0, 29, 0],
+  ['Tenpole Line 7 HAS', 50, 13, 0, 7, 0, 10, 0],
+  ['Tenpole Line 7 SSS', 50, 13, 0, 0, 7, 0, 7],
+  ['Thunderforce Edit ATD', 50, 18, 0, 0, 0, 0, 12],
+  ['Thunderforce Edit SFA', 50, 10, 0, 10, 0, 0, 10],
+  ['Tune Square PS CD-74A', 50, 7, 0, 15, 15, 0, 0],
+  ['Wingo Jazz Format 3C', 50, 6, 12, 0, 0, 0, 12],
+  ['Wingo Jazz Format 3E', 50, 0, 0, 0, 8, 7, 15],
+  ['Artemist Zone Type EF2', 60, 18, 12, 0, 10, 10, 0],
+  ['Artemist Zone Type L2', 60, 15, 0, 0, 10, 15, 10],
+  ['Artemist Zone Type L3', 60, 10, 15, 0, 0, 15, 0],
+  ['Generation System Ver.77U', 60, 30, 5, 0, 5, 10, 0],
+  ['Generation System Ver.77V', 60, 10, 30, 0, 5, 5, 0],
+  ['Generation System Ver.88', 60, 5, 0, 30, 10, 5, 0],
+  ['Sequence 9 GG', 60, 0, 0, 20, 10, 10, 10],
+  ['Sequence 9 IEK', 60, 0, 20, 10, 10, 0, 10],
+  ['Sequence 9 OTL', 60, 20, 10, 10, 10, 0, 0],
+  ['Tenpole Line 8 DDR', 60, 5, 10, 0, 30, 5, 0],
+  ['Tenpole Line 8 DDR+', 60, 5, 0, 10, 0, 5, 30],
+  ['Tenpole Line 8 SDR', 60, 5, 5, 0, 0, 30, 10],
+  ['Thunderforce Quick-SR', 60, 10, 0, 15, 10, 0, 15],
+  ['Thunderforce Quick-T', 60, 10, 15, 10, 15, 0, 0],
+  ['Thunderforce Quick-T2', 60, 0, 0, 10, 15, 15, 10],
+  ['Adagio YE-08', 62, 0, 28, 6, 0, 15, 15],
+  ['Andantino Format.99A', 62, 12, 14, 28, 0, 0, 10],
+  ['Fortissimo No.73 ASD', 62, 28, 17, 5, 0, 0, 14],
+  ['Moderato Version. F1', 62, 15, 13, 8, 0, 0, 28],
+  ['SC-Dolce-7E', 62, 8, 0, 16, 25, 0, 15],
+  ['Vivace X RT', 62, 0, 14, 0, 7, 28, 15],
+  ['Power Brain No.9 OGS', 70, 35, 15, 0, 0, 5, 0],
+  ['Power Brain No.9 OTS', 70, 8, 11, 0, 0, 16, 20],
+  ['Power Brain No.9 ORS', 70, 20, 15, 0, 0, 20, 0],
+  ['Prelude 8001 AQ', 70, 0, 10, 16, 0, 0, 29],
+  ['Prelude 9001 FRD', 70, 17, 0, 0, 23, 15, 0],
+  ['Prelude Final', 70, 20, 24, 0, 0, 0, 11],
+  ['Tune Square CD-75A', 70, 0, 12, 35, 0, 8, 0],
+  ['Tune Square L-A', 70, 0, 35, 0, 0, 6, 14],
+  ['Tune Square PS R-1B', 70, 20, 0, 0, 35, 0, 0],
+  ['Wingo Jazz Format 4C', 70, 0, 0, 20, 0, 0, 35],
+  ['Wingo Jazz Format S', 70, 0, 10, 0, 25, 10, 10],
+  ['Wingo Waltz Format 4A', 70, 30, 10, 15, 0, 0, 0],
+  ['Wingo Waltz format 4B', 70, 0, 20, 0, 35, 0, 0],
+  ['Wingo ZS-08', 70, 20, 0, 0, 0, 35, 0],
+  ['Wingo ZS-09', 70, 0, 20, 0, 0, 0, 35],
+  ['Artemist Zone Type G1', 80, 26, 0, 0, 8, 26, 0],
+  ['Artemist Zone Type G2', 80, 0, 10, 21, 0, 0, 29],
+  ['Artemist Zone Type G3', 80, 0, 27, 0, 33, 0, 0],
+  ['Power Brain No.11 CD-99A', 80, 17, 0, 5, 0, 0, 38],
+  ['Power Brain No.11 FAll', 80, 37, 0, 8, 0, 5, 10],
+  ['Power Brain No.11 FAQ', 80, 0, 16, 0, 39, 5, 0],
+  ['Power Brain No.13', 80, 0, 7, 0, 25, 28, 0],
+  ['Power Brain No.13 CC', 80, 13, 0, 0, 7, 40, 0],
+  ['Power Brain Org No.1', 80, 29, 31, 0, 0, 0, 0],
+  ['Sequence X GP', 80, 8, 0, 0, 40, 12, 0],
+  ['Sequence X GR', 80, 0, 11, 9, 0, 0, 40],
+  ['Sequence X SP', 80, 0, 12, 40, 0, 0, 8],
+  ['Thunderforce Speed-01', 80, 0, 40, 0, 10, 10, 0],
+  ['Thunderforce Speed-02', 80, 40, 7, 0, 0, 0, 13],
+  ['Thunderforce Speed-03', 80, 0, 14, 0, 10, 0, 36],
+  ['Adagio YE-09', 82, 15, 35, 0, 10, 0, 12],
+  ['Andantino Format 99C', 82, 0, 12, 35, 0, 12, 13],
+  ['Fortissmo No.73 AA', 82, 35, 0, 0, 10, 10, 17],
+  ['Moderato Version. F2', 82, 10, 15, 0, 7, 0, 40],
+  ['SC-Dolce-8A', 82, 10, 0, 20, 30, 12, 0],
+  ['Vivace X RA', 82, 15, 0, 12, 5, 40, 0],
+  ['Generation System Ver.99', 90, 45, 0, 10, 0, 0, 10],
+  ['Generation System Ver.100', 90, 0, 20, 0, 9, 0, 36],
+  ['Generation System Ver.111', 90, 26, 0, 0, 13, 26, 0],
+  ['Sequence 11 GDD', 90, 0, 10, 0, 0, 17, 38],
+  ['Sequence 11 SGG', 90, 42, 0, 13, 0, 0, 10],
+  ['Sequence 11 SPG', 90, 0, 13, 0, 41, 11, 0],
+  ['Tenpole Line 9 GMR', 90, 29, 31, 5, 0, 0, 0],
+  ['Tenpole Line 9 SDR', 90, 0, 15, 21, 0, 0, 29],
+  ['Tenpole Line 9 SDR-II', 90, 0, 27, 0, 33, 5, 0],
+  ['Wingo Jazz Format V-Q', 90, 11, 0, 9, 45, 0, 0],
+  ['Wingo Jazz Format VI', 90, 0, 0, 45, 11, 9, 0],
+  ['Wingo Jazz Format VI-2', 90, 8, 45, 0, 12, 0, 0],
+  ['Wingo Waltz Format V', 90, 0, 9, 28, 0, 28, 0],
+  ['Wingo Waltz Format V-A', 90, 5, 0, 15, 0, 45, 0],
+  ['Wingo Waltz Format V-B', 90, 13, 0, 0, 0, 7, 45],
+  ['Prelude Final. V', 100, 0, 20, 0, 14, 0, 36],
+  ['Prelude Final. V-2', 100, 20, 0, 0, 17, 33, 0],
+  ['Prelude Final. VII', 100, 24, 0, 0, 0, 22, 24],
+  ['Power Brain Org A', 100, 0, 50, 0, 0, 0, 20],
+  ['Power Brain Org B-1', 100, 50, 0, 0, 0, 20, 0],
+  ['Power Brain Org No.1 Q', 100, 0, 50, 0, 20, 0, 0],
+  ['Tune Square DE-G', 100, 20, 0, 0, 0, 50, 0],
+  ['Tune Square PS FD-54A', 100, 0, 20, 0, 0, 0, 50],
+  ['Tune Square PS QD-34A', 100, 0, 20, 0, 50, 0, 0]
+]
 
 var damageBonusPerStat = [
   0.0000000, 0.0227500, 0.0250250, 0.0273000, 0.0295750, 0.0318500, 0.0341250,
@@ -409,6 +583,7 @@ export default {
       gear: 'B-Gear',
       level: 1,
       factors: statsFactors['B-Gear'],
+      cpus: cpuList,
       stats: {
         attack: 1,
         defense: 1,
