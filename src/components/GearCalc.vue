@@ -73,8 +73,16 @@
         </div>
       </div>
       <div class="col-sm-3 cpus">
-        <div v-for="cpu in cpus">
-          {{ cpu[0] }}
+        <div class="cpu" v-for="cpu in cpus">
+          [{{ cpu[1] }}] {{ cpu[0] }}
+          <div class="cpu-stats">
+            <div v-if="cpu[2] > 0">Attack: {{ cpu[2] }}</div>
+            <div v-if="cpu[3] > 0">Defense: {{ cpu[3] }}</div>
+            <div v-if="cpu[4] > 0">Fuel: {{ cpu[4] }}</div>
+            <div v-if="cpu[5] > 0">Spirit: {{ cpu[5] }}</div>
+            <div v-if="cpu[6] > 0">Evasion: {{ cpu[6] }}</div>
+            <div v-if="cpu[7] > 0">Shield: {{ cpu[7] }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -270,5 +278,34 @@ small {
 
 .stat-button.disabled {
   color: #333;
+}
+
+.cpus {
+  max-height: 600px;
+  overflow-y: scroll;
+}
+
+.cpu {
+  text-align: left;
+  position: relative;
+  padding: 10px;
+  padding-left: 20px;
+  background-color: #333;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.cpu .cpu-stats {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 5;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  z-index: 2;
+}
+
+.cpu:hover .cpu-stats {
+  display: block;
 }
 </style>

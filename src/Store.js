@@ -1,4 +1,5 @@
 export default {
+  // Level, attack, defense, fuel, spirit, evasion, shield
   cpus: [
     ['Power Brain No.7 UND', 1, 30, 15, 0, 0, 0, 0],
     ['Surquince 8 Final Ver.UNQ', 1, 15, 0, 0, 0, 30, 0],
