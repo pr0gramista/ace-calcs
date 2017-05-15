@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="col-sm-3 cpus">
-        <div class="cpu" v-for="cpu in cpus">
+        <div class="cpu" v-for="cpu in cpus" @click="selectCPU(cpu)"  v-bind:class="{ selected: cpu[0] == selectedCPU[0] }">
           [{{ cpu[1] }}] {{ cpu[0] }}
           <div class="cpu-stats">
             <div v-if="cpu[2] > 0">Attack: {{ cpu[2] }}</div>
@@ -91,6 +91,8 @@
 
 <script>
 import Store from '@/Store'
+
+var cpuNone = ['NONE', 0, 0, 0, 0, 0, 0, 0, 0]
 
 let statsFactors = {
   'B-Gear': {
@@ -142,7 +144,8 @@ export default {
         spirit: 1,
         fuel: 1,
         shield: 1
-      }
+      },
+      selectedCPU: cpuNone
     }
   },
   watch: {
@@ -170,12 +173,12 @@ export default {
     },
     values: function () {
       return {
-        attack: this.factors.attack * this.stats.attack,
-        defense: this.factors.defense * this.stats.defense,
-        evasion: this.factors.evasion * this.stats.evasion,
-        fuel: this.factors.fuel * this.stats.fuel,
-        spirit: this.factors.spirit * this.stats.spirit,
-        shield: this.factors.shield * this.stats.shield
+        attack: this.factors.attack * this.stats.attack + this.selectedCPU[2],
+        defense: this.factors.defense * this.stats.defense + this.selectedCPU[3],
+        evasion: this.factors.evasion * this.stats.evasion + this.selectedCPU[6],
+        fuel: this.factors.fuel * this.stats.fuel + this.selectedCPU[4],
+        spirit: this.factors.spirit * this.stats.spirit + this.selectedCPU[5],
+        shield: this.factors.shield * this.stats.shield + this.selectedCPU[7]
       }
     },
     damage_bonus: function () {
@@ -229,6 +232,13 @@ export default {
     decreaseStat: function (stat) {
       if (this.stats[stat] > 1) {
         this.stats[stat]--
+      }
+    },
+    selectCPU: function (cpu) {
+      if (this.selectedCPU === cpu) {
+        this.selectedCPU = cpuNone
+      } else {
+        this.selectedCPU = cpu
       }
     }
   }
@@ -293,6 +303,7 @@ small {
   background-color: #333;
   border-radius: 5px;
   margin: 5px 0;
+  cursor: pointer;
 }
 
 .cpu .cpu-stats {
@@ -303,6 +314,10 @@ small {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 10px;
   z-index: 2;
+}
+
+.cpu.selected {
+  border: 1px #2ECC71 solid;
 }
 
 .cpu:hover .cpu-stats {
