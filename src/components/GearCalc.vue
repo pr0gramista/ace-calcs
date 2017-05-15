@@ -17,6 +17,8 @@
           </div>
           <label for="level">Level</label>
           <input id="level" class="form-control small-input" v-model="level"/>
+          <label for="mission">Mission level</label>
+          <input id="mission" class="form-control small-input" v-model="mission"/>
         </div>
         <div class="col-sm-6 stats">
           <div>
@@ -135,6 +137,7 @@ export default {
     return {
       gear: 'B-Gear',
       level: 1,
+      mission: 1,
       factors: statsFactors['B-Gear'],
       cpus: Store.cpus,
       stats: {
@@ -159,7 +162,7 @@ export default {
   },
   computed: {
     points: function () {
-      return this.level * 1 + 6 // Six points at level 1
+      return this.level * 1 + 6 + Store.missionPointsSum[this.mission] // Six points at level 1
     },
     availablePoints: function () {
       var usedPoints = 0
