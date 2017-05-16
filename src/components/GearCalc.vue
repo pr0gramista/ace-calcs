@@ -59,31 +59,31 @@
           Stats: {{ availablePoints }}
         </div>
         <div class="col-sm-4 bonus">
-          <div>Defense bonus: {{ defense_bonus }}</div>
-          <div>Evasion bonus: {{ evasion_bonus }}</div>
+          <div>Defense bonus: {{ defense_bonus }}%</div>
+          <div>Evasion bonus: {{ evasion_bonus }}%</div>
           <div>Shield: {{ shield_bonus }}</div>
         </div>
         <div class="col-sm-4 bonus">
-          <div>Damage bonus: {{ damage_bonus }}</div>
-          <div>Pierce bonus: {{ pierce_bonus }}</div>
-          <div>Accuracy bonus: {{ accuracy_bonus }}</div>
+          <div>Damage bonus: {{ damage_bonus }}%</div>
+          <div>Pierce bonus: {{ pierce_bonus }}%</div>
+          <div>Accuracy bonus: {{ accuracy_bonus }}%</div>
         </div>
         <div class="col-sm-4 bonus">
-          <div>Spirit: {{ spirit_bonus }}</div>
+          <div>Skill points: {{ spirit_bonus }}</div>
           <div>Fuel: {{ fuel_bonus }}</div>
-          <div>Capacity: {{ capacity_bonus }}</div>
+          <div>Capacity: {{ capacity_bonus }}kg</div>
         </div>
       </div>
       <div class="col-sm-3 cpus">
         <div class="cpu" v-for="cpu in cpus" @click="selectCPU(cpu)"  v-bind:class="{ selected: cpu[0] == selectedCPU[0] }">
           [{{ cpu[1] }}] {{ cpu[0] }}
           <div class="cpu-stats">
-            <div v-if="cpu[2] > 0">Attack: {{ cpu[2] }}</div>
-            <div v-if="cpu[3] > 0">Defense: {{ cpu[3] }}</div>
-            <div v-if="cpu[4] > 0">Fuel: {{ cpu[4] }}</div>
-            <div v-if="cpu[5] > 0">Spirit: {{ cpu[5] }}</div>
-            <div v-if="cpu[6] > 0">Evasion: {{ cpu[6] }}</div>
-            <div v-if="cpu[7] > 0">Shield: {{ cpu[7] }}</div>
+            <div v-if="cpu[2] > 0">[Attack Stat: +{{ cpu[2] }}]</div>
+            <div v-if="cpu[3] > 0">[Defense Stat: +{{ cpu[3] }}]</div>
+            <div v-if="cpu[4] > 0">[Fuel Stat: +{{ cpu[4] }}]</div>
+            <div v-if="cpu[5] > 0">[Spirit Stat: +{{ cpu[5] }}]</div>
+            <div v-if="cpu[6] > 0">[Evasion Stat: +{{ cpu[6] }}]</div>
+            <div v-if="cpu[7] > 0">[Shield Stat: +{{ cpu[7] }}]</div>
           </div>
         </div>
       </div>
@@ -317,6 +317,8 @@ small {
   background-color: rgba(0, 0, 0, 0.8);
   padding: 10px;
   z-index: 2;
+  color: #00FF00;
+  line-height: 1.2;
 }
 
 .cpu.selected {
