@@ -59,19 +59,52 @@
           Stats: {{ availablePoints }}
         </div>
         <div class="col-sm-4 bonus">
-          <div>Defense bonus: {{ defense_bonus }}%</div>
-          <div>Evasion bonus: {{ evasion_bonus }}%</div>
-          <div>Shield: {{ shield_bonus }}</div>
+          <table class="table">
+            <tr>
+              <th>Defense bonus:</th>
+              <th>{{ defense_bonus }}%</th>
+            </tr>
+            <tr>
+              <th>Evasion bonus:</th>
+              <th>{{ evasion_bonus }}%</th>
+            </tr>
+            <tr>
+              <th>Shield:</th>
+              <th>{{ shield_bonus }}</th>
+            </tr>
+          </table>
         </div>
         <div class="col-sm-4 bonus">
-          <div>Damage bonus: {{ damage_bonus }}%</div>
-          <div>Pierce bonus: {{ pierce_bonus }}%</div>
-          <div>Accuracy bonus: {{ accuracy_bonus }}%</div>
+          <table class="table">
+            <tr>
+              <th>Damage bonus:</th>
+              <th>{{ damage_bonus }}%</th>
+            </tr>
+            <tr>
+              <th>Pierce bonus:</th>
+              <th>{{ pierce_bonus }}%</th>
+            </tr>
+            <tr>
+              <th>Accuracy bonus:</th>
+              <th>{{ accuracy_bonus }}%</th>
+            </tr>
+          </table>
         </div>
         <div class="col-sm-4 bonus">
-          <div>Skill points: {{ spirit_bonus }}</div>
-          <div>Fuel: {{ fuel_bonus }}</div>
-          <div>Capacity: {{ capacity_bonus }}kg</div>
+          <table class="table">
+            <tr>
+              <th>Skill points:</th>
+              <th>{{ spirit_bonus }}</th>
+            </tr>
+            <tr>
+              <th>Fuel:</th>
+              <th>{{ fuel_bonus }}</th>
+            </tr>
+            <tr>
+              <th>Capacity:</th>
+              <th>{{ capacity_bonus }}kg</th>
+            </tr>
+          </table>
         </div>
         <div class="col-sm-6 armors">
           <div id="armors" class="btn-group">
