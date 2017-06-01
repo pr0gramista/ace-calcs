@@ -1,4 +1,42 @@
 export default {
+  armors: {
+    'I-Gear': [
+      ['Rapid Binder Ver. 1', 43, 0, 9.8, 1287, 1430, 640],
+      ['Rapid Binder Ver. 2', 53, 0, 11.37, 1656, 1840, 660],
+      ['Rapid Binder Ver. 3', 63, 0, 13.33, 2015, 2239, 680],
+      ['Rapid Binder Ver. 4', 73, 0, 15.29, 2384, 2649, 700],
+      ['Rapid Binder Ver. 5', 83, 0, 16.86, 2744, 3049, 720],
+      ['Rapid Binder Ver. 6', 93, 0, 18.82, 3094, 3438, 740],
+      ['Rapid Binder Ver. Final', 100, 0, 20.00, 3350, 3722, 760]
+    ],
+    'B-Gear': [
+      ['Tackle Veil Ver. 1', 43, 9.80, 0, 1287, 1430, 640],
+      ['Tackle Veil Ver. 2', 53, 11.37, 0, 1656, 1840, 660],
+      ['Tackle Veil Ver. 3', 63, 13.33, 0, 2015, 2239, 680],
+      ['Tackle Veil Ver. 4', 73, 15.29, 0, 2384, 2649, 700],
+      ['Tackle Veil Ver. 5', 83, 16.86, 0, 2744, 3049, 720],
+      ['Tackle Veil Ver. 6', 93, 18.82, 0, 3094, 3438, 740],
+      ['Tackle Veil Ver. Final', 100, 20.00, 0, 3350, 3722, 760]
+    ],
+    'M-Gear': [
+      ['Rigid Defender Ver. 1', 43, 9.80, 0, 1287, 1430, 640],
+      ['Rigid Defender Ver. 2', 53, 11.37, 0, 1656, 1840, 660],
+      ['Rigid Defender Ver. 3', 63, 13.33, 0, 2015, 2239, 680],
+      ['Rigid Defender Ver. 4', 73, 15.29, 0, 2384, 2649, 700],
+      ['Rigid Defender Ver. 5', 83, 16.86, 0, 2744, 3049, 720],
+      ['Rigid Defender Ver. 6', 93, 18.82, 0, 3094, 3438, 740],
+      ['Rigid Defender Ver. Final', 100, 20.00, 0, 3350, 3722, 760]
+    ],
+    'A-Gear': [
+      ['Revival Guarder Ver. 1', 43, 9.80, 0, 1958, 2146, 640],
+      ['Revival Guarder Ver. 2', 53, 11.37, 0, 1656, 1840, 660],
+      ['Revival Guarder Ver. 3', 63, 13.33, 0, 2015, 2239, 680],
+      ['Revival Guarder Ver. 4', 73, 15.29, 0, 2384, 2649, 700],
+      ['Revival Guarder Ver. 5', 83, 16.86, 0, 2744, 3049, 720],
+      ['Revival Guarder Ver. 6', 93, 18.82, 0, 3094, 3438, 740],
+      ['Revival Guarder Ver. Final', 100, 20.00, 0, 3350, 3722, 760]
+    ]
+  },
   // Level, attack, defense, fuel, spirit, evasion, shield
   cpus: [
     ['Power Brain No.7 UND', 1, 30, 15, 0, 0, 0, 0],

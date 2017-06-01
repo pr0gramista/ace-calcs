@@ -73,6 +73,23 @@
           <div>Fuel: {{ fuel_bonus }}</div>
           <div>Capacity: {{ capacity_bonus }}kg</div>
         </div>
+        <div class="col-sm-6 armors">
+          <div id="armors" class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Armor <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li v-for="armor in armors[gear]" class="armor" @click="selectArmor(armor)">
+                [{{ armor[1] }}] {{ armor[0] }}
+                <div class="armor-stats">
+                  <div v-if="armor[2] > 0">Defense: +{{ armor[2] }}%</div>
+                  <div v-if="armor[3] > 0">Evasion: +{{ armor[3] }}%</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          {{ selectedArmor[0] }}
+        </div>
       </div>
       <div class="col-sm-3 cpus">
         <div class="cpu" v-for="cpu in cpus" @click="selectCPU(cpu)"  v-bind:class="{ selected: cpu[0] == selectedCPU[0] }">
@@ -95,6 +112,7 @@
 import Store from '@/Store'
 
 var cpuNone = ['NONE', 0, 0, 0, 0, 0, 0, 0, 0]
+var armorNone = ['', 0, 0, 0, 0, 0, 0, 0]
 
 let statsFactors = {
   'B-Gear': {
@@ -140,6 +158,7 @@ export default {
       mission: 1,
       factors: statsFactors['B-Gear'],
       cpus: Store.cpus,
+      armors: Store.armors,
       stats: {
         attack: 1,
         defense: 1,
@@ -148,7 +167,8 @@ export default {
         fuel: 1,
         shield: 1
       },
-      selectedCPU: cpuNone
+      selectedCPU: cpuNone,
+      selectedArmor: armorNone
     }
   },
   watch: {
@@ -243,6 +263,13 @@ export default {
       } else {
         this.selectedCPU = cpu
       }
+    },
+    selectArmor: function (armor) {
+      if (this.selectedArmor === armor) {
+        this.selectedArmor = armorNone
+      } else {
+        this.selectedArmor = armor
+      }
     }
   }
 }
@@ -291,6 +318,19 @@ small {
 
 .stat-button.disabled {
   color: #333;
+}
+
+.armors {
+  text-align: left;
+}
+
+.armor {
+  padding: 5px 0;
+}
+
+.armor .armor-stats {
+  color: #00FF00;
+  line-height: 1.2;
 }
 
 .cpus {
