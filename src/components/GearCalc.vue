@@ -88,7 +88,13 @@
               </li>
             </ul>
           </div>
-          {{ selectedArmor[0] }}
+          <div class="armor-current">
+            {{ selectedArmor[0] }}
+            <div class="armor-stats">
+              <div v-if="selectedArmor[2] > 0">Defense: +{{ selectedArmor[2] }}%</div>
+              <div v-if="selectedArmor[3] > 0">Evasion: +{{ selectedArmor[3] }}%</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-sm-3 cpus">
@@ -208,10 +214,10 @@ export default {
       return (Store.damageBonusPerStat[this.values.attack] * 100).toFixed(2)
     },
     evasion_bonus: function () {
-      return (Store.evasionBonusPerStat[this.values.evasion] * 100).toFixed(2)
+      return (Store.evasionBonusPerStat[this.values.evasion] * 100 + this.selectedArmor[3]).toFixed(2)
     },
     defense_bonus: function () {
-      return (Store.defenseBonusPerStat[this.values.defense] * 100).toFixed(2)
+      return (Store.defenseBonusPerStat[this.values.defense] * 100 + this.selectedArmor[2]).toFixed(2)
     },
     accuracy_bonus: function () {
       return (Store.accuracyBonusPerStat[this.values.attack]).toFixed(2)
@@ -246,6 +252,7 @@ export default {
     setGear: function (gear) {
       this.gear = gear
       this.factors = statsFactors[gear]
+      this.selectedArmor = armorNone
     },
     increaseStat: function (stat) {
       if ((this.stats[stat] + 1) * this.factors[stat] <= 300 && this.availablePoints > 0) {
@@ -328,7 +335,12 @@ small {
   padding: 5px 0;
 }
 
-.armor .armor-stats {
+.armor-current {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.armor-stats {
   color: #00FF00;
   line-height: 1.2;
 }
