@@ -2,7 +2,7 @@
   <div class="gearcalc container">
     <div class="row">
       <div class="col-sm-9">
-        <div class="col-sm-12">
+        <div class="col-sm-12 light">
           <label class="left-label" for="gear">Gear</label>
           <div id="gear" class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -19,6 +19,7 @@
           <input id="level" class="form-control small-input" v-model="level"/>
           <label for="mission">Mission level</label>
           <input id="mission" class="form-control small-input" v-model="mission"/>
+          <span class="pad">Stats: <span class="big">{{ availablePoints }}</span></span>
         </div>
         <div class="col-sm-6 stats">
           <div>
@@ -54,9 +55,6 @@
             <button class="stat-button red" v-bind:class="{ disabled: stats['shield'] <= 1 }" @click="decreaseStat('shield')"><i class="material-icons">keyboard_arrow_down</i></button>
             <small class="less">points to max: {{ points_to_max.shield }}</small>
           </div>
-        </div>
-        <div class="col-sm-12">
-          Stats: {{ availablePoints }}
         </div>
         <div class="col-sm-4 bonus">
           <table class="table">
@@ -317,6 +315,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.pad {
+  margin: 5px;
+}
+
+.big {
+  font-size: 20px;
+}
+
+.light {
+  border-radius: 5px;
+  background: #333;
+  padding: 10px 0;
+}
+
 label {
   margin-right: 5px;
   margin-left: 10px;
@@ -324,6 +336,10 @@ label {
 
 small {
   font-size: 14px;
+}
+
+tr > th:first-child {
+  font-weight: 300;
 }
 
 .less {
@@ -337,6 +353,7 @@ small {
 
 .stats {
   font-size: 20px;
+  padding: 20px 0;
 }
 
 .stat-button {
